@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio react</title>
+    <script src="http://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="http://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="http://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function MeuElemento({frase}){
+            return (
+                <div>
+                    <h1>{frase}</h1>
+                </div>
+            )
+        }
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        const texto = 'Venha estudar na Fatec!';
+        let index = 0;
+
+        function tick() {
+            if (index <= texto.length) {
+                root.render(<MeuElemento frase={texto.slice(0, index)}/>);
+                index++;
+                setTimeout(tick, 100);
+            } 
+            else {
+                setTimeout(() => {
+                    index = 0;
+                    tick();
+                }, 1000);
+            }
+        }
+        tick()
+    </script>
+</body>
+</html>
