@@ -33,12 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 else {
                     valor *= 0.9;}
 
-                const valorFormatado = new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                }).format(valor);
-
-                return valorFormatado;
+                return valor;
             }
         };
         const anosUso = carro.rodagem();
