@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Pessoas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <div id="contador"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contador = document.getElementById("contador");
+
+            const container = document.createElement("div");
+            container.classList.add("p-3", "text-center", "bg-white", "rounded", "shadow-lg");
+            container.style.width = "350px";
+
+            const titleDiv = document.createElement("div");
+            titleDiv.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-2");
+
+            const title = document.createElement("h2");
+            title.innerText = "Total";
+
+            const resetButton = document.createElement("button");
+            resetButton.classList.add("btn", "btn-outline-dark", "btn-sm");
+            resetButton.innerHTML = '<i class="bi bi-arrow-clockwise"></i>';
+            resetButton.onclick = () => {
+                menCount = 0;
+                womenCount = 0;
+                updateCounts();
+            };
+
+            titleDiv.appendChild(title);
+            titleDiv.appendChild(resetButton);
+
+            const totalInput = document.createElement("input");
+            totalInput.type = "text";
+            totalInput.classList.add("form-control", "text-center", "mb-3", "fw-bold");
+            totalInput.value = "0";
+            totalInput.disabled = true;
+
+            let menCount = 0;
+            let womenCount = 0;
+
+            function createCounter(label, imgSrc, increment, decrement) {
+                const counterDiv = document.createElement("div");
+                counterDiv.classList.add("d-flex", "flex-column", "align-items-center", "mb-3");
+
+                const img = document.createElement("img");
+                img.src = imgSrc;
+                img.classList.add("mb-2");
+                img.style.width = "60px";
+
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.classList.add("d-flex", "gap-2");
+
+                const plusBtn = document.createElement("button");
+                plusBtn.classList.add("btn", "btn-success", "rounded-circle");
+                plusBtn.innerHTML = '<i class="bi bi-plus-lg"></i>';
+                plusBtn.style.width = "40px";
+                plusBtn.style.height = "40px";
+                plusBtn.onclick = increment;
+
+                const minusBtn = document.createElement("button");
+                minusBtn.classList.add("btn", "btn-danger", "rounded-circle");
+                minusBtn.innerHTML = '<i class="bi bi-dash-lg"></i>';
+                minusBtn.style.width = "40px";
+                minusBtn.style.height = "40px";
+                minusBtn.onclick = decrement;
+
+                buttonsDiv.appendChild(plusBtn);
+                buttonsDiv.appendChild(minusBtn);
+
+                const labelDiv = document.createElement("div");
+                labelDiv.classList.add("fw-bold", "mt-2");
+                labelDiv.innerText = label;
+
+                const countInput = document.createElement("input");
+                countInput.type = "text";
+                countInput.classList.add("form-control", "text-center", "mt-2");
+                countInput.value = "0";
+                countInput.disabled = true;
+
+                counterDiv.appendChild(img);
+                counterDiv.appendChild(buttonsDiv);
+                counterDiv.appendChild(labelDiv);
+                counterDiv.appendChild(countInput);
+
+                return { counterDiv, countInput };
+            }
+
+            const menCounter = createCounter(
+                "Homens",
+                "https://cdn-icons-png.flaticon.com/512/1995/1995498.png",
+                () => { menCount++; updateCounts(); },
+                () => { if (menCount > 0) menCount--; updateCounts(); }
+            );
+
+            const womenCounter = createCounter(
+                "Mulheres",
+                "https://cdn-icons-png.flaticon.com/512/1995/1995490.png",
+                () => { womenCount++; updateCounts(); },
+                () => { if (womenCount > 0) womenCount--; updateCounts(); }
+            );
+
+            function updateCounts() {
+                menCounter.countInput.value = menCount;
+                womenCounter.countInput.value = womenCount;
+                totalInput.value = menCount + womenCount;
+            }
+
+            container.appendChild(titleDiv);
+            container.appendChild(totalInput);
+            container.appendChild(menCounter.counterDiv);
+            container.appendChild(womenCounter.counterDiv);
+            contador.appendChild(container);
+        });
+    </script>
+</body>
+
+</html>
